@@ -5,7 +5,6 @@ import com.goods.common.annotation.ControllerEndpoint;
 import com.goods.common.error.SystemException;
 import com.goods.common.response.ResponseBean;
 import com.goods.common.vo.business.ProductCategoryTreeNodeVO;
-import com.goods.common.vo.system.DepartmentVO;
 import com.goods.common.vo.system.PageVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -62,18 +61,40 @@ public class GoodsCategory {
     }
 
 
-    //编辑物资  http://www.localhost:8989/business/productCategory/edit/81
+
+    @ApiOperation(value = "根据id查询物资分类信息")
+    //@RequiresPermissions({"department:edit"})
+    @GetMapping("/edit/{id}")
+    public ResponseBean getGoodsCategoryById(@PathVariable Long id) throws SystemException {
+        ProductCategoryTreeNodeVO productCategoryTreeNodeVO = goodsCategoryService.getGoodsCategoryById(id);
+        return ResponseBean.success(productCategoryTreeNodeVO);
+    }
+
+
+    //编辑物资分类信息  http://www.localhost:8989/business/productCategory/update/33
+    @ApiOperation(value = "编辑物资分类信息")
+    //@RequiresPermissions({"department:edit"})
+    @PutMapping ("/update/{id}")
+    public ResponseBean edit(@PathVariable Long id,
+                             @RequestBody @Validated ProductCategoryTreeNodeVO PathVariable) throws SystemException {
+        goodsCategoryService.update(id,PathVariable);
+        return ResponseBean.success();
+    }
+
+    //删除物资分类信息 http://www.localhost:8989/business/productCategory/delete/37
     /**
-     * 编辑部门
+     * 删除部门
      *
      * @param id
      * @return
      */
-    @ApiOperation(value = "编辑物资分类信息")
-    //@RequiresPermissions({"department:edit"})
-    @GetMapping("/edit/{id}")
-    public ResponseBean edit(@PathVariable Long id) throws SystemException {
-        DepartmentVO departmentVO = departmentService.edit(id);
-        return ResponseBean.success(departmentVO);
+    @ControllerEndpoint(exceptionMessage = "删除物资分类信息失败", operation = "删除物资分类信息")
+    //@ApiOperation(value = "删除部门")
+    @RequiresPermissions({"department:delete"})
+    @DeleteMapping("/delete/{id}")
+    public ResponseBean delete(@PathVariable Long id) throws SystemException {
+        goodsCategoryService.delete(id);
+        return ResponseBean.success();
     }
+
 }

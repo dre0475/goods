@@ -13,4 +13,10 @@ public interface GoodsCategoryService {
     PageVO<ProductCategoryTreeNodeVO> CategoryTreeTree(Integer pageNum, Integer pageSize);
 
     void add(ProductCategoryTreeNodeVO productCategoryTreeNodeVO);
+
+    ProductCategoryTreeNodeVO getGoodsCategoryById(Long id);
+
+    void update(Long id,ProductCategoryTreeNodeVO productCategoryTreeNodeVO);
+
+    void delete(Long id);
 }

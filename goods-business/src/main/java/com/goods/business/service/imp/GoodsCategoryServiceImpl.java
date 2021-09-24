@@ -9,9 +9,11 @@ import com.goods.common.utils.CategoryTreeBuilder;
 import com.goods.common.utils.ListPageUtils;
 import com.goods.common.vo.business.ProductCategoryTreeNodeVO;
 import com.goods.common.vo.system.PageVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -46,6 +48,31 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
     @Override
     public void add(ProductCategoryTreeNodeVO productCategoryTreeNodeVO) {
         BizProductCategory bizProductCategory = Vo2Object.Vo2Object(productCategoryTreeNodeVO);
+        bizProductCategory.setCreateTime(new Date());
+        bizProductCategory.setModifiedTime(new Date());
         bizProductCategoryMapper.insert(bizProductCategory);
+    }
+
+    //根据id查询被编辑的物资分类信息
+    @Override
+    public ProductCategoryTreeNodeVO getGoodsCategoryById(Long id) {
+        BizProductCategory bizProductCategory = bizProductCategoryMapper.selectByPrimaryKey(id);
+        ProductCategoryTreeNodeVO productCategoryTreeNodeVO = new ProductCategoryTreeNodeVO();
+        BeanUtils.copyProperties(bizProductCategory,productCategoryTreeNodeVO);
+        return productCategoryTreeNodeVO;
+    }
+
+    @Override
+    public void update(Long id,ProductCategoryTreeNodeVO productCategoryTreeNodeVO) {
+        BizProductCategory bizProductCategory = new BizProductCategory();
+        BeanUtils.copyProperties(productCategoryTreeNodeVO,bizProductCategory);
+        bizProductCategory.setId(id);
+        bizProductCategory.setModifiedTime(new Date());
+        bizProductCategoryMapper.updateByPrimaryKeySelective(bizProductCategory);
+    }
+
+    @Override
+    public void delete(Long id) {
+        bizProductCategoryMapper.deleteByPrimaryKey(id);
     }
 }
