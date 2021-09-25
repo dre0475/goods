@@ -69,7 +69,8 @@
             <domainObjectRenamingRule searchString="^Tb" replaceString="" />
         </table>
         <!--将你要生成的表尽数罗列 -->
-        <!--<table tableName="biz_product_category"></table>-->
-        <table tableName="biz_supplier"></table>
+        <!--<table tableName="biz_product_category"></table>    物资类别表-->
+        <!--<table tableName="biz_supplier"></table>           物资来源表-->
+        <table tableName="biz_product"></table>            <!--物资资料表-->
     </context>
 </generatorConfiguration>

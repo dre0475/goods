@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,9 +30,7 @@ public class InstocksServiceImpl implements InstocksService {
     @Override
     public PageVO<SupplierVO> findSupplierList(Integer pageNum, Integer pageSize, SupplierVO supplierVO) {
         PageHelper.startPage(pageNum, pageSize);
-
         Example o = new Example(BizSupplier.class);
-
         Example.Criteria criteria = o.createCriteria();
 
         if (supplierVO.getAddress() != null && !"".equals(supplierVO.getAddress())) {
@@ -60,7 +59,38 @@ public class InstocksServiceImpl implements InstocksService {
     @Override
     public void add(SupplierVO supplierVO) {
         BizSupplier bizSupplier = new BizSupplier();
+        bizSupplier.setCreateTime(new Date());
         BeanUtils.copyProperties(supplierVO,bizSupplier);
         bizSupplierMapper.insert(bizSupplier);
     }
+
+
+    //根据id查询
+    @Override
+    public SupplierVO edit(Long id) {
+        SupplierVO supplierVO = new SupplierVO();
+        BizSupplier bizSupplier = bizSupplierMapper.selectByPrimaryKey(id);
+        BeanUtils.copyProperties(bizSupplier,supplierVO);
+        return supplierVO;
+    }
+
+    //更新物资来源
+    @Override
+    public void updata(Long id,SupplierVO supplierVO) {
+        BizSupplier bizSupplier = new BizSupplier();
+        bizSupplier.setEmail(supplierVO.getEmail());
+        bizSupplier.setName(supplierVO.getName());
+        bizSupplier.setPhone(supplierVO.getPhone());
+        bizSupplier.setAddress(supplierVO.getAddress());
+        bizSupplier.setSort(supplierVO.getSort());
+        BeanUtils.copyProperties(supplierVO,bizSupplier);
+        bizSupplierMapper.updateByPrimaryKeySelective(bizSupplier);
+    }
+
+    //删除物资来源
+    @Override
+    public void delete(Long id) {
+        bizSupplierMapper.deleteByPrimaryKey(id);
+    }
+
 }

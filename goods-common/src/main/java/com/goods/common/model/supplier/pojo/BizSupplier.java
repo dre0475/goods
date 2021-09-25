@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
-@ApiModel(value="com.cyb.pojo.BizSupplier")
+@ApiModel(value="com.goods.common.model.supplier.pojo.BizSupplier")
 @Table(name = "biz_supplier")
 public class BizSupplier implements Serializable {
     @Id

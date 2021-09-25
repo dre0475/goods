@@ -37,4 +37,29 @@ public class Instocks {
         instocksService.add(supplierVO);
         return ResponseBean.success();
     }
+
+
+    // 查询 http://www.localhost:8989/business/supplier/edit/23
+    @GetMapping("/edit/{id}")
+    public ResponseBean edit(@PathVariable Long id) {
+        SupplierVO supplierVO = instocksService.edit(id);
+        return ResponseBean.success(supplierVO);
+    }
+
+    //根据id修改http://www.localhost:8989/business/supplier/update/23
+    @PutMapping("update/{id}")
+    public ResponseBean update(@PathVariable Long id,
+                               @RequestBody SupplierVO supplierVO){
+        instocksService.updata(id,supplierVO);
+        return ResponseBean.success();
+    }
+
+    //删除 http://www.localhost:8989/business/supplier/delete/23
+    @DeleteMapping("delete/{id}")
+    public ResponseBean delete(@PathVariable Long id){
+        instocksService.delete(id);
+        return ResponseBean.success();
+    }
+
+
 }

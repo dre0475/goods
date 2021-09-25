@@ -29,8 +29,8 @@ public class GoodsCategory {
 
     //物资类别  一进来就分页查询所有的三级分类信息 钩子函数
     @GetMapping("/categoryTree")
-    public ResponseBean categoryTree(@RequestParam Integer pageNum,
-                                     @RequestParam Integer pageSize){
+    public ResponseBean categoryTree(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                     @RequestParam(value = "pageSize", defaultValue = "5")Integer pageSize){
 
         PageVO<ProductCategoryTreeNodeVO> productCategoryTreeNodeVOPageVO = goodsCategoryService.CategoryTreeTree(pageNum, pageSize);
         return ResponseBean.success(productCategoryTreeNodeVOPageVO);

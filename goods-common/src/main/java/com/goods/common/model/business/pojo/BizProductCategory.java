@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
-@ApiModel(value="com.cyb.pojo.BizProductCategory")
+@ApiModel(value="com.goods.common.model.business.pojo.BizProductCategory")
 @Table(name = "biz_product_category")
 public class BizProductCategory implements Serializable {
     /**

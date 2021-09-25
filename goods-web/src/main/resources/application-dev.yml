@@ -34,11 +34,11 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 fdfs:
-  resHost: http://192.168.200.128:8080/
+  resHost: http://192.168.213.66/
   storagePort: 80
   connect-timeout: 1000
   so-timeout: 1500
-  trackerList: 192.168.200.128:22122
+  trackerList: 192.168.213.66:22122
   thumbImage:
     width: 100
     height: 100
